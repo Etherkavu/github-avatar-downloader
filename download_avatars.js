@@ -36,13 +36,18 @@ function downloadImageByURL(url, filePath) {
        counter++;
 
 }
-
-getRepoContributors("jquery", "jquery", function(err, result) {
-  console.log("Errors:", err);
-  var tokens = result.split('\n');
-  tokens.pop();
-  tokens.forEach(function(entry) {
-    var path = './avatar';
-    downloadImageByURL(entry, path);
+if (process.argv.length === 4){
+  var owner = process.argv[2];
+  var repo = process.argv[3];
+  getRepoContributors(owner, repo, function(err, result) {
+    console.log("Errors:", err);
+    var tokens = result.split('\n');
+    tokens.pop();
+    tokens.forEach(function(entry) {
+      var path = './avatar';
+      downloadImageByURL(entry, path);
+    });
   });
-});
+} else {
+  console.log("Please enter proper number of arguments")
+}
